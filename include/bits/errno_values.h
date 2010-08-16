@@ -1,1 +1,0 @@
-../../libc/sysdeps/linux/common/bits/errno_values.h

@@ -1,2 +1,4 @@
 *.os
 *.o
+a.out
+extra/config
