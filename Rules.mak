@@ -1,5 +1,5 @@
-UCLIBC_TOP_DIR=/home/zamfir/klee-uclibc
-LLVMROOTDIR=/home/zamfir/llvm-2.6
+UCLIBC_TOP_DIR=/home/stefan/cloud9/klee-uclibc
+LLVMROOTDIR=/home/stefan/cloud9/llvm
 # Rules.make for uClibc
 #
 # Copyright (C) 2000-2006 Erik Andersen <andersen@uclibc.org>

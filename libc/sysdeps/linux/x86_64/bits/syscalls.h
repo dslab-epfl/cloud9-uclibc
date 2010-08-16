@@ -122,6 +122,7 @@ return (type) (INLINE_SYSCALL(name, 6, arg1, arg2, arg3, arg4, arg5, arg6)); \
 
 /* Define a macro which expands inline into the wrapper code for a system
    call.  */
+#if 0
 #undef INLINE_SYSCALL
 #define INLINE_SYSCALL(name, nr, args...) \
   ({									      \
@@ -208,6 +209,15 @@ return (type) (INLINE_SYSCALL(name, 6, arg1, arg2, arg3, arg4, arg5, arg6)); \
   register long int _a6 asm ("r9") = __arg6;		\
   LOAD_REGS_5
 #define ASM_ARGS_6	ASM_ARGS_5, "r" (_a6)
+
+#else
+
+extern long int syscall (long int __sysno, ...) __THROW;
+
+#undef INLINE_SYSCALL
+#define INLINE_SYSCALL(name, nr, args...) \
+  syscall(SYS_ify(name), ## args)
+#endif
 
 #endif /* __ASSEMBLER__ */
 #endif /* _BITS_SYSCALLS_H */
