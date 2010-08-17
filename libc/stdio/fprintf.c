@@ -27,15 +27,15 @@ int fprintf(FILE * __restrict stream, const char * __restrict format, ...)
 // stderr to native stdout using vprintf, but if we are running with
 // symbolic printfs (for completeness, esp. for cross-checking), we
 // should always run instrumented code (e.g., vfprintf)
-#ifdef KLEE_SYM_PRINTF
-        if (0) {
-#else
-        if (stream==stdout || stream==stderr) {
-#endif
-          rv = vprintf(format, arg);
-        } else {
+//#ifdef KLEE_SYM_PRINTF
+//        if (0) {
+//#else
+        //if (stream==stdout || stream==stderr) {
+//#endif
+        //  rv = vprintf(format, arg);
+        //} else {
           rv = vfprintf(stream, format, arg);
-        }
+        //}
 	va_end(arg);
 
 	return rv;
