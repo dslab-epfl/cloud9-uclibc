@@ -8,7 +8,7 @@
 CSRC := ftok.c
 
 # multi source sem.c
-CSRC += semget.c semctl.c semop.c
+# CSRC += semget.c semctl.c semop.c
 
 # multi source shm.c
 CSRC += shmat.c shmctl.c shmdt.c shmget.c
