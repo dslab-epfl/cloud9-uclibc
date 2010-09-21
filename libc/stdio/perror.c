@@ -33,8 +33,11 @@ void perror(register const char *s)
 #else
 	{
 		char buf[64];
-		fprintf(stderr, "%s%s%s\n", s, sep,
-				__glibc_strerror_r(errno, buf, sizeof(buf)));
+		// XXX: __glibc_strerror_r returns the lower 32 bits pointer instead of the 
+		// 64-bit pointer crashing the perror call if used with:
+		// fprintf(stderr, "%s%s%s\n", s, sep, __glibc_strerror_r(errno, buf, 63));
+		__glibc_strerror_r(errno, buf, 63);
+		fprintf(stderr, "%s%s%s\n", s, sep, buf);
 	}
 #endif
 }
