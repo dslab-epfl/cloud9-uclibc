@@ -14,6 +14,8 @@ libc_hidden_proto(__glibc_strerror_r)
 #warning CONSIDER: Increase buffer size for error message (non-%m case)?
 #endif
 
+char *__glibc_strerror_r(int errnum, char *strerrbuf, size_t buflen);
+
 libc_hidden_proto(perror)
 void perror(register const char *s)
 {
@@ -33,11 +35,8 @@ void perror(register const char *s)
 #else
 	{
 		char buf[64];
-		// XXX: __glibc_strerror_r returns the lower 32 bits pointer instead of the 
-		// 64-bit pointer crashing the perror call if used with:
-		// fprintf(stderr, "%s%s%s\n", s, sep, __glibc_strerror_r(errno, buf, 63));
-		__glibc_strerror_r(errno, buf, 63);
-		fprintf(stderr, "%s%s%s\n", s, sep, buf);
+		fprintf(stderr, "%s%s%s\n", s, sep,
+		    __glibc_strerror_r(errno, buf, sizeof(buf)));
 	}
 #endif
 }
