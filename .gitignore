@@ -1,4 +1,5 @@
 *.os
+*.os.dep
 *.o
 a.out
 extra/config
