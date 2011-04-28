@@ -32,7 +32,7 @@ include $(libc_DIR)/stdio/Makefile.in
 include $(libc_DIR)/string/Makefile.in
 include $(libc_DIR)/termios/Makefile.in
 include $(libc_DIR)/inet/Makefile.in
-#include $(libc_DIR)/signal/Makefile.in
+include $(libc_DIR)/signal/Makefile.in
 include $(libc_DIR)/stdlib/Makefile.in
 include $(libc_DIR)/unistd/Makefile.in
 
