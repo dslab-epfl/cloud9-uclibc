@@ -33,7 +33,7 @@ CROSS=
 endif
 
 include $(LLVMROOTDIR)//Makefile.config
-LLVMTOOLDIR = $(LLVMROOTDIR)/Release/bin
+LLVMTOOLDIR = $(LLVMROOTDIR)/Release+Asserts/bin
 
 DODEBUG=y
 CC         = $(LLVMGCC) --emit-llvm $(KLEE_CFLAGS)
