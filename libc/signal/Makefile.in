@@ -7,9 +7,9 @@
 
 CSRC :=	allocrtsig.c killpg.c raise.c sigaction.c sigaddset.c sigandset.c \
 	sigblock.c sigdelset.c sigempty.c sigfillset.c siggetmask.c sighold.c \
-	sigignore.c sigintr.c sigisempty.c sigismem.c sigjmp.c \
+	sigintr.c sigisempty.c sigismem.c sigjmp.c \
 	sigorset.c sigpause.c sigrelse.c sigset.c sigsetmask.c sigsetops.c \
-	sysv_signal.c sigwait.c #signal.c
+	sysv_signal.c sigwait.c # signal.c sigignore.c
 
 ifneq ($(strip $(ARCH_OBJS)),)
 CSRC := $(filter-out $(notdir $(ARCH_OBJS:.o=.c)),$(CSRC))
