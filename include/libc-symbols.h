@@ -290,6 +290,8 @@
 # define __sec_comment "\n#APP\n\t#"
 #endif
 
+/* Cloud9 */
+#if 0
 /* When a reference to SYMBOL is encountered, the linker will emit a
    warning message MSG.  */
 #define link_warning(symbol, msg) \
@@ -297,6 +299,9 @@
   static const char __evoke_link_warning_##symbol[]	\
     __attribute__ ((used, section (".gnu.warning." #symbol __sec_comment))) \
     = msg;
+#else
+#define link_warning(symbol, msg)
+#endif
 
 /* Handling on non-exported internal names.  We have to do this only
    for shared code.  */

@@ -1,6 +1,7 @@
 *.os
 *.os.dep
 *.o
+*~
 a.out
 extra/config
 include/bits
@@ -20,4 +21,3 @@ include/sys/ptrace.h
 include/sys/reg.h
 include/sys/ucontext.h
 include/sys/user.h
-Rules.mak

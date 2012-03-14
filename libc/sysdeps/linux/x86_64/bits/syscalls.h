@@ -12,6 +12,7 @@
 #ifndef __ASSEMBLER__
 
 #include <errno.h>
+#include <asm/unistd.h>
 
 #define SYS_ify(syscall_name)  (__NR_##syscall_name)
 

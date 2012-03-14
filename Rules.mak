@@ -32,15 +32,24 @@ ifndef CROSS
 CROSS=
 endif
 
-include $(LLVMROOTDIR)//Makefile.config
+TOP := $(dir $(lastword $(MAKEFILE_LIST)))
+
+LLVMROOTDIR = $(TOP)/../third_party/llvm-build
 LLVMTOOLDIR = $(LLVMROOTDIR)/Release+Asserts/bin
+LLVMPLUGIN = $(LLVMROOTDIR)/Release+Asserts/lib/LLVMgold.so
+
+BINUTILSDIR = $(TOP)/../third_party/binutils-install
 
 DODEBUG=y
-CC         = $(LLVMGCC) --emit-llvm $(KLEE_CFLAGS)
-AR         = $(LLVMTOOLDIR)/llvm-ar
-LD         = $(LLVMTOOLDIR)/llvm-ld
+CC         = $(LLVMTOOLDIR)/clang -emit-llvm -isystem /usr/include/x86_64-linux-gnu -B$(LLVMROOTDIR)/Release+Asserts/lib/clang/3.1
+AR         = $(BINUTILSDIR)/bin/ar --plugin $(LLVMPLUGIN)
+RANLIB		 = $(BINUTILSDIR)/bin/ar --plugin $(LLVMPLUGIN) -s
+LD         = $(BINUTILSDIR)/bin/ld
 NM         = $(LLVMTOOLDIR)/llvm-nm
 STRIPTOOL  = true
+
+LDFLAGS 	 := -flto -Wl,-plugin=$(LLVMPLUGIN) -Wl,-plugin-opt=also-emit-llvm
+ARFLAGS		 := -cru
 
 INSTALL    = install
 LN         = ln
@@ -50,8 +59,8 @@ TAR        = tar
 STRIP_FLAGS ?= -x -R .note -R .comment
 
 # Select the compiler needed to build binaries for your development system
-HOSTCC     = $(LLVMGCC)
-BUILD_CFLAGS = -O2 -Wall --emit-llvm
+HOSTCC     = $(CC)
+BUILD_CFLAGS = -O2 -Wall
 export ARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun.*/sparc/ -e s/sparc.*/sparc/ \
 				  -e s/arm.*/arm/ -e s/sa110/arm/ -e s/sh.*/sh/ \
 				  -e s/s390x/s390/ -e s/parisc.*/hppa/ \
@@ -136,8 +145,6 @@ check_as=$(shell \
 check_ld=$(shell \
 	if $(LD) $(1) -o /dev/null -b binary /dev/null > /dev/null 2>&1; \
 	then echo "$(1)"; fi)
-
-ARFLAGS:=cr
 
 OPTIMIZATION:=
 # Use '-Os' optimization if available, else use -O2, allow Config to override
