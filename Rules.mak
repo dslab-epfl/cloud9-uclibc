@@ -43,14 +43,14 @@ BINUTILSDIR = $(TOP)/../third_party/binutils-install
 DODEBUG=y
 
 ifndef NO_EMIT_LLVM
-CC         = $(LLVMTOOLDIR)/clang -emit-llvm -isystem /usr/include/x86_64-linux-gnu -B$(LLVMROOTDIR)/Release+Asserts/lib/clang/3.1
+CC         = $(LLVMTOOLDIR)/clang -flto -isystem /usr/include/x86_64-linux-gnu -B$(LLVMROOTDIR)/Release+Asserts/lib/clang/3.1
 AR         = $(BINUTILSDIR)/bin/ar --plugin $(LLVMPLUGIN)
 RANLIB		 = $(BINUTILSDIR)/bin/ar --plugin $(LLVMPLUGIN) -s
 LD         = $(BINUTILSDIR)/bin/ld
 NM         = $(LLVMTOOLDIR)/llvm-nm
 STRIPTOOL  = true
 
-LDFLAGS 	 := -flto -Wl,-plugin=$(LLVMPLUGIN) -Wl,-plugin-opt=also-emit-llvm
+LDFLAGS 	 := -Wl,-plugin-opt=also-emit-llvm
 ARFLAGS		 := -cru
 else
 CC         = $(LLVMTOOLDIR)/clang
